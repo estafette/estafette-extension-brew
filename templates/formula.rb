@@ -9,4 +9,8 @@ class {{.FormulaClassName}} < Formula
     mv Dir.glob("{{.Formula}}-*").first, "{{.Formula}}"
     bin.install "{{.Formula}}"
   end
+
+  test do
+    system {{.Formula}} help
+  end
 end
