@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
@@ -74,6 +75,7 @@ func main() {
 	}
 	defer resp.Body.Close()
 
+	// calculate sh256 checksum
 	hasher := sha256.New()
 	if _, err := io.Copy(hasher, resp.Body); err != nil {
 		log.Fatal().Err(err).Msgf("Failed calculating sha256 checksum for binary from url %v", params.BinaryURL)
@@ -95,8 +97,18 @@ func main() {
 		hex.EncodeToString(hasher.Sum(nil)),
 	}
 
+	// write rendered template to file
 	err = formulaTemplate.Execute(targetFile, data)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed writing template to file")
 	}
+
+	// log template to stdout
+	var renderedTemplate bytes.Buffer
+	err = formulaTemplate.Execute(&renderedTemplate, data)
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed rendering template for stdout")
+	}
+
+	log.Info().Msg(renderedTemplate.String())
 }
