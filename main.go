@@ -15,6 +15,7 @@ import (
 	"github.com/alecthomas/kingpin"
 	foundation "github.com/estafette/estafette-foundation"
 	"github.com/iancoleman/strcase"
+	"github.com/logrusorgru/aurora"
 	"github.com/rs/zerolog/log"
 	"gopkg.in/yaml.v2"
 )
@@ -107,11 +108,12 @@ func main() {
 	}
 
 	// log template to stdout
+	log.Info().Msgf("%v.rb:", params.Formula)
 	var renderedTemplate bytes.Buffer
 	err = formulaTemplate.Execute(&renderedTemplate, data)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed rendering template for stdout")
 	}
 
-	log.Info().Msg(renderedTemplate.String())
+	log.Info().Msg(aurora.Sprintf(aurora.Gray(18, renderedTemplate.String())))
 }
