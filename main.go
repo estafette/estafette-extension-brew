@@ -14,6 +14,7 @@ import (
 
 	"github.com/alecthomas/kingpin"
 	foundation "github.com/estafette/estafette-foundation"
+	"github.com/iancoleman/strcase"
 	"github.com/rs/zerolog/log"
 	"gopkg.in/yaml.v2"
 )
@@ -82,14 +83,16 @@ func main() {
 	}
 
 	data := struct {
-		Formula     string
-		Description string
-		Homepage    string
-		BinaryURL   string
-		Version     string
-		Sha256      string
+		Formula          string
+		FormulaClassName string
+		Description      string
+		Homepage         string
+		BinaryURL        string
+		Version          string
+		Sha256           string
 	}{
 		params.Formula,
+		strcase.ToCamel(params.Formula),
 		params.Description,
 		params.Homepage,
 		params.BinaryURL,

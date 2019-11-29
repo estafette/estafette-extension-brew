@@ -1,4 +1,4 @@
-class {{.Formula}} < Formula
+class {{.FormulaClassName}} < Formula
     desc "{{.Description}}"
     homepage "{{.Homepage}}"
     url "{{.BinaryURL}}"
