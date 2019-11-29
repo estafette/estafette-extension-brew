@@ -11,6 +11,6 @@ class {{.FormulaClassName}} < Formula
   end
 
   test do
-    system {{.Formula}} help
+    system "{{.Formula}}", "help"
   end
 end
