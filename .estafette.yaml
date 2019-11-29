@@ -34,6 +34,7 @@ stages:
 
       COPY ${ESTAFETTE_GIT_NAME} /
       COPY templates /templates
+      COPY ca-certificates.crt /etc/ssl/certs/
 
       WORKDIR /estafette-work
 
@@ -45,6 +46,7 @@ stages:
     path: ./publish
     copy:
     - templates
+    - /etc/ssl/certs/ca-certificates.crt
 
   push-to-docker-hub:
     image: extensions/docker:dev
