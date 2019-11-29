@@ -10,6 +10,6 @@ class {{.FormulaClassName}} < Formula
   end
 
   test do
-    system "{{.Formula}}", "help"
+    system "#{bin}/{{.Formula}}", "help"
   end
 end
