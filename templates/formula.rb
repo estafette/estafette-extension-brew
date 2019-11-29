@@ -6,8 +6,7 @@ class {{.FormulaClassName}} < Formula
     version "{{.Version}}"
 
   def install
-    mv Dir.glob("{{.Formula}}-*").first, "{{.Formula}}"
-    bin.install "{{.Formula}}"
+    bin.install "{{.Filename}}" => "{{.Formula}}"
   end
 
   test do

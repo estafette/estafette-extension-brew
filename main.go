@@ -8,7 +8,9 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"path/filepath"
 	"runtime"
+	"strings"
 
 	"text/template"
 
@@ -77,6 +79,8 @@ func main() {
 	}
 	defer resp.Body.Close()
 
+	filename := strings.TrimSuffix(filepath.Base(params.BinaryURL), ".zip")
+
 	// calculate sh256 checksum
 	hasher := sha256.New()
 	if _, err := io.Copy(hasher, resp.Body); err != nil {
@@ -86,6 +90,7 @@ func main() {
 	data := struct {
 		Formula          string
 		FormulaClassName string
+		Filename         string
 		Description      string
 		Homepage         string
 		BinaryURL        string
@@ -94,6 +99,7 @@ func main() {
 	}{
 		params.Formula,
 		strcase.ToCamel(params.Formula),
+		filename,
 		params.Description,
 		params.Homepage,
 		params.BinaryURL,
