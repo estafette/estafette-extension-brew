@@ -48,6 +48,22 @@ stages:
     - templates
     - /etc/ssl/certs/ca-certificates.crt
 
+  check-container:
+    parallelStages:
+      check-efficiency:
+        image: extensions/docker:dev
+        action: dive
+        container: brew
+        repositories:
+        - extensions
+
+      vulnerability-scan:
+        image: extensions/docker:dev
+        action: trivy
+        container: brew
+        repositories:
+        - extensions
+
   push-to-docker-hub:
     image: extensions/docker:dev
     action: push
